@@ -50,7 +50,7 @@ void TraceSegmentReporter::report(TracingContextPtr tracing_context) {
   if (stream_ != nullptr) {
     if (stream_->isAboveWriteBufferHighWatermark()) {
       ENVOY_LOG(debug, "Failed to report segment to SkyWalking Server since buffer is over limit");
-      tracing_stats_->segments_dropped_.inc();
+      tracing_stats_.segments_dropped_.inc();
       return;
     }
     tracing_stats_.segments_sent_.inc();
