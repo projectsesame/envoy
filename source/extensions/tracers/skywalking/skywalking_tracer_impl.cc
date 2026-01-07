@@ -47,7 +47,7 @@ Driver::Driver(const envoy::config::trace::v3::SkyWalkingConfig& proto_config,
 }
 
 Tracing::SpanPtr Driver::startSpan(const Tracing::Config&, Tracing::TraceContext& trace_context,
-                                   const StreamInfo::StreamInfo&, const std::string&,
+                                   const StreamInfo::StreamInfo&, const std::string& operation_name,
                                    Tracing::Decision decision) {
   auto& tracer = tls_slot_ptr_->getTyped<Driver::TlsTracer>().tracer();
   TracingContextSharedPtr tracing_context;
@@ -86,7 +86,7 @@ Tracing::SpanPtr Driver::startSpan(const Tracing::Config&, Tracing::TraceContext
     }
   }
 
-  return tracer.startSpan(trace_context.path(), trace_context.protocol(), tracing_context);
+  return tracer.startSpan(operation_name, trace_context.protocol(), tracing_context);
 }
 
 void Driver::loadConfig(const envoy::config::trace::v3::ClientConfig& client_config,
